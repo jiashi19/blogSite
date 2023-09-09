@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 
 subtitle: ''
 description: ''
 keywords:
@@ -102,8 +102,11 @@ theme: A4
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
+- type: git
   repo: https://gitee.com/jiashi19/jiashi19.git
   branch: master
 
+- type: git
+  repo: https://github.com/jiashi19/jiashi19.github.io.git
+  branch: main
 
