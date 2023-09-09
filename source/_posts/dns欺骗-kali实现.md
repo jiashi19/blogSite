@@ -87,8 +87,7 @@ $ vim /var/www/html/index.html
 
 
 参考：
-
-[(134条消息) Kali利用Ettercap实现中间人攻击之DNS劫持（DNS欺骗）_ettercap dns欺骗_call me pascal的博客-CSDN博客](https://blog.csdn.net/m0_46745664/article/details/126276629#:~:text=开始攻击 1.打开 Ettercap 2.网卡默认eth0，也没什么好说的%2C点√,3.添加攻击目标 4.对目标进行ARP欺骗%2C点击后确认就行 5.打开Plugins，如图 6.打开dns_spoof 7.攻击基本完成，使用被攻击的主机选择baidu进行ping)
+http://t.csdn.cn/l8GII
 
 [(134条消息) Ettercap中间人攻击——DNS劫持、替换网页内容与ARP欺骗_kali替换网页_Mr. Wanderer的博客-CSDN博客](https://blog.csdn.net/Mr_Wanderer/article/details/107985245)
 
