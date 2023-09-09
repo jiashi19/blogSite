@@ -2,14 +2,14 @@ menu:
   首页: /  #需要hexo new page index,在index/index.md填写的内容将会展现在首页上
   文章: /list/ # 需要hexo new page list
   # 添加其他页面格式举例：
-  # 关于: /about/ # 需要hexo new page about
+  关于: /about/ # 需要hexo new page about
   # 标签: /tags/ #需要hexo new page tags
   # 分类: /categories/ # 需要hexo new page categories
   # ...
 
 showInMenu:  # menu 中的哪些页面显示在首页中（“首页”必定显示）
   - 文章  # 将在首页显示 文章 链接
-  # - 关于
+  - 关于
   # - 标签
   # - 分类
 
@@ -33,7 +33,7 @@ post: #除首页之外页面
   themeInfo: false # true | false  # 是否开启 底部右侧 声明本站信息
 
 # 相对于source目录下的头像url
-favicon: /img/favicon.webp
+favicon: /img/favicon.JPG
 
 # ---------------------------------------------------------------------------------------
 # 以上为基本配置，实现了A4主题追求的纯净风

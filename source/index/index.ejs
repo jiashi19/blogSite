@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <img src="/img/moon.jpg" alt="">
+    <p>your ip: <span id="ip"></span><span id="city"></span></p>
+
+    <script>
+        // 获取用户的IP地址
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip').textContent = data.ip;
+                // 使用IP地址查询城市信息
+                fetch(`https://ipapi.co/${data.ip}/json/`)
+                    .then(response => response.json())
+                    .then(cityData => {
+                        document.getElementById('city').textContent = "--"+cityData.city;
+                    })
+                    .catch(error => {
+                        console.error('--无法获取城市信息:', error);
+                    });
+            })
+            .catch(error => {
+                console.error('无法获取IP地址:', error);
+            });
+    </script>
+</body>
