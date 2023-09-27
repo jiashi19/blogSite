@@ -36,13 +36,13 @@ https://zsecurity.org/how-to-start-a-fake-access-point-fake-wifi/
 
 - fluxion--设立一个钓鱼AP
 
-  [Wifi钓鱼工具——fluxion - freeliver - 博客园 (cnblogs.com)](https://www.cnblogs.com/cmt110/p/15125418.html#:~:text=1. 选择一个攻击方式 专属门户 创建一个 "邪恶的双胞胎",接入点。 2. 选择要扫描的信道，默认选 "1"（若模拟攻击网卡支持5GHz，可选择 "3"）；出现目标AP后CTRL%2BC，这里选择29，选择后即进入攻击配置环节。)
+  [Wifi钓鱼工具——fluxion - freeliver - 博客园 (cnblogs.com)](https://www.cnblogs.com/cmt110/p/15125418.html)
 
   
 
 ### kali设定成桥接模式
 
-[(134条消息) 【虚拟机】解决Kali虚拟机不能联网问题（桥接模式WIFI和本地网线）_江湖one Cat的博客-CSDN博客](https://blog.csdn.net/qq_43633973/article/details/100732758#:~:text=如下图步骤： 1 1..打开虚拟机编辑->虚拟网络编辑器如图： 2 2.选择对应的网卡 参考：控制面板→网络和Internet→查看网络状态和任务→更改适配器设置如图： 3 3.可以右击WLAN选择状态→属性→IPV4设置自动获取网络,-a 我自己的一开始eth0是没有IP地址的，如图： 2.KALI基础配置： 在终端输入： 1）gedit %2Fetc%2Fnetwork%2Finterfaces 这里采用静态配置的方法：（在下面我写了可以设置另一种动态获取DHCP的方法，如果网络稳定，不经常更换网络环境，这里可以选择静态配置） )
+[(134条消息) 【虚拟机】解决Kali虚拟机不能联网问题（桥接模式WIFI和本地网线）_江湖one Cat的博客-CSDN博客](https://blog.csdn.net/qq_43633973/article/details/100732758)
 
 ## 基本结构
 
@@ -52,7 +52,7 @@ STA站点：每一个连接到无线网络中的终端
 
 SSID：服务集标识符，一个或一组基础架构模式无线网络的标识
 
-- 基本服务集标识符（BSSID），表示的是[AP](https://zh.wikipedia.org/wiki/無線接取器)的[数据链路层](https://zh.wikipedia.org/wiki/数据链路层)的[MAC地址](https://zh.wikipedia.org/wiki/MAC地址)
+- 基本服务集标识符（BSSID），表示的是AP的MAC地址
 - 扩展服务集定标识符（ESSID），一个最长32字节区分大小写的字符串，表示无线网络的名称
 
 （bssid就是具体的某个连锁店编号（001）或地址，ssid就是连锁店的名字或者照片，essid就是连锁店的总公司或者招牌or品牌。一般ssid和essid都是相同的）
