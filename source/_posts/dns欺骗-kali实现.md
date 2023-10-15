@@ -2,6 +2,9 @@
 title: dns欺骗--kali实现
 date: 2023-09-09 19:16:01
 tags:
+categories:
+- [渗透]
+- 网络攻防
 ---
 
 # DNS 欺骗
@@ -58,7 +61,7 @@ ip_forward：为0时是断网攻击，为1时开启流量转发。
 
 - 以下命令可以获取当前的ip_forward的值
 
-```b
+```bash
 $ cat /proc/sys/net/ipv4/ip_forward
 ```
 

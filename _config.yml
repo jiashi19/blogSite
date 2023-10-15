@@ -3,12 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Blog
-subtitle: 'from js19'
+title: Blog from js19
 description: ''
 keywords:
-author: John Doe
-language: en
+author: Jiashi
+language: zh-CN
 timezone: ''
 
 # URL
@@ -98,7 +97,6 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: fluid
-language: zh-CN
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
@@ -110,9 +108,20 @@ deploy:
   repo: https://github.com/jiashi19/jiashi19.github.io.git
   branch: main
 
-	encrypt:
+encrypt:
   enable: true
-  abstract: Here's something encrypted, password is required to continue reading.
+  abstract: password is required.
   message: password is required here.
-  wrong_pass_message: Oh, this is an invalid password. Check and try again, please.
+  wrong_pass_message: wrong password.
   wrong_hash_message: Oh, these decrypted content cannot be verified, but you can still have a look.
+
+about:
+  avatar: /img/avatar.png
+  name: "jiashi"
+  intro: "stay hungry, stay foolish"
+  icons:
+    - { class: 'iconfont icon-github-fill', link: 'https://github.com/jiashi19', tip: 'GitHub' }
+    - { class: 'iconfont icon-wechat-fill', qrcode: '/img/qrcode.png' }
+
+
+banner_img: /img/moon.jpg

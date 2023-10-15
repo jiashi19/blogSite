@@ -1,7 +1,10 @@
 ---
-title: 文件上传
+title: ctf-文件上传
 date: 2023-09-27 09:32:01
 tags:
+categories:
+  - [ctf-web]
+  - 渗透
 ---
 # 一句话木马与文件上传
 

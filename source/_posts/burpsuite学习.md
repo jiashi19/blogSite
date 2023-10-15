@@ -2,6 +2,8 @@
 title: burpsuite学习
 date: 2023-09-09 19:56:56
 tags:
+categories:
+- [渗透]
 ---
 
 # BurpSuite

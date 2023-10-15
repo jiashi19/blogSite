@@ -2,6 +2,9 @@
 title: ctf-web练习(php)
 date: 2023-09-18 00:30:52
 tags:
+categories:
+  - [ctf-web]
+  - 渗透
 ---
 # ctf-web练习(php)--待补充
 

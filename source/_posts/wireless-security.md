@@ -2,13 +2,15 @@
 title: wireless_security
 date: 2023-09-09 19:54:16
 tags:
+categories:
+- 网络攻防
 ---
 
 # 无线安全
 
 ## 相关资源
 
-基础知识和一些攻击::
+基础知识和一些攻击:
 
 https://www.scucyber.cn/wireless_sec/
 
