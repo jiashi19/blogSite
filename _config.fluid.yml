@@ -116,7 +116,7 @@ encrypt:
   wrong_hash_message: Oh, these decrypted content cannot be verified, but you can still have a look.
 
 about:
-  avatar: /img/avatar.png
+  avatar: /img/header.png
   name: "jiashi"
   intro: "stay hungry, stay foolish"
   icons:
@@ -124,4 +124,17 @@ about:
     - { class: 'iconfont icon-wechat-fill', qrcode: '/img/qrcode.png' }
 
 
-banner_img: /img/moon.jpg
+
+index:
+  slogan:
+    enable: true
+    text: 遗憾组成人生
+    api:
+      enable: true
+      url: "https://v1.hitokoto.cn/"
+      method: "GET"
+      headers: {}
+      keys: ["hitokoto"]
+
+navbar:
+  blog_title: loveAndMoon
