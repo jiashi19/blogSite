@@ -73,7 +73,7 @@ burp抓包，改回php后缀名，并且加上GIF89a(gif的文件头)
 
 ![image-20230922111052350](https://s2.loli.net/2023/09/22/3vlMOEcDTFUymb5.png)
 
-![image-20230922111145578](/Users/wufei/Library/Application Support/typora-user-images/image-20230922111145578.png)
+![image-20230922111145578](https://s2.loli.net/2023/10/26/mnCRELWgDAZNO5d.png)
 
 GIF8---47494638  已经是文件头了 
 
@@ -98,5 +98,11 @@ GIF8---47494638  已经是文件头了
 	SetHandler application/x-httpd-php 
 </FilesMatch>
 ```
+
+### 参考链接
+
+https://www.cnblogs.com/linfangnan/p/15784968.html
+
+![2fc0902942b46dcad0a5b6a23f693363](https://s2.loli.net/2023/10/26/7fsbOxUGq4yHjwV.png)
 
 ###  待补充。。。。
