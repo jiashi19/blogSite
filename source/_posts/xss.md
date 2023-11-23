@@ -1,7 +1,7 @@
 ---
 title: xss
 categories:
-  - others
+  - 渗透
 date: 2023-11-16 09:39:52
 tags:
 ---
