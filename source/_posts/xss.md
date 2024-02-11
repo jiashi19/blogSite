@@ -1,5 +1,5 @@
 ---
-title: xss
+title: XSS
 categories:
   - 渗透
 date: 2023-11-16 09:39:52
@@ -81,4 +81,14 @@ setcookie()函数用于设置cookie
 存储型（持久型）
 
 DOM型
+
+
+
+（xss数据接收平台：https://xssaq.com/）
+
+## XSS防御
+
+Content Security Policy（CSP）
+
+
 

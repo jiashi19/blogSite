@@ -1,5 +1,5 @@
 ---
-title: SQL注入
+title: SQL-injection
 categories:
   - 渗透
 date: 2023-11-16 09:44:14
@@ -42,7 +42,7 @@ tags:
 
 4. 结合information_schema数据库（mysql）
 
-![image-20231109141357092](https://s2.loli.net/2023/11/09/GdZxKsCtiSI8c2T.png)
+![image-20231109141357092](../img/GdZxKsCtiSI8c2T.png)
 
 ## SQL注入分类
 

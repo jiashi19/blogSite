@@ -23,7 +23,7 @@ categories:
 
 使用burp抓包，可以注意到post请求携带参数token。repeater重复发送第二次就会发现出现“csrf token error”的提示符。
 
-![image-20231003005919263](https://s2.loli.net/2023/10/03/goLb2NI5PfKUZCD.png)
+![image-20231003005919263](../img/goLb2NI5PfKUZCD.png)
 
 每次请求，token都会改变，而这个下一次请求的token值从每次的response中可以得到。
 

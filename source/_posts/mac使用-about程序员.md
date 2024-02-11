@@ -1,5 +1,5 @@
 ---
-title: mac使用--about程序员
+title: about-macOS
 date: 2023-09-01 12:29:54
 tags:
 categories:
