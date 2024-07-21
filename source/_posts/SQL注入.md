@@ -32,7 +32,7 @@ tags:
 
 ![image-20231109140035798](https://s2.loli.net/2023/11/09/GSyMJ8rcNnTOQfZ.png)
 
-1. union select 查询的字段数必须和select查询的字段数匹配；----猜解列数：用and ... union select 1,2,3,4,5,6.…; 来猜解列数（字段数)，只有列数相等了，才能返回True；
+1. union select 查询的字段数必须和select查询的字段数匹配；----**猜解列数**：用and ... union select 1,2,3,4,5,6.…; 来猜解列数（字段数)，只有列数相等了，才能返回True；
 
 2. **and 1=2** 可以否定掉前面的语句从而执行全新的语句
 
@@ -83,11 +83,9 @@ tags:
 
 1. 判断是否存在注入点;
 
-2. 判断字段长度(字段数）; order by
+2. 判断字段数; order by
 
 3. 判断字段回显位置;   and 1=2 union select 1,2,3 
-
-   见下图可知2，3列可以收到回显，后续把2或3 替换成别的列名即可暴露该列的数据
 
 4. 判断数据库信息;information_schema; database()
 
