@@ -1,7 +1,7 @@
 ---
 title: java多线程
 categories:
-  - others
+  - java
 date: 2024-07-21 20:49:06
 tags:
 password: 12345d

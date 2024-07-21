@@ -1,7 +1,7 @@
 ---
 title: java反射
 categories:
-  - others
+  - java
 date: 2024-07-21 20:48:48
 tags:
 password: 12345f
