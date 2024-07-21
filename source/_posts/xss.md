@@ -76,11 +76,12 @@ setcookie()函数用于设置cookie
 
 ## XSS类型
 
-反射性
+- 反射性
 
-存储型（持久型）
+- 存储型（持久型）
 
-DOM型
+- DOM型
+
 
 
 
@@ -88,7 +89,17 @@ DOM型
 
 ## XSS防御
 
-Content Security Policy（CSP）
+- Content Security Policy（CSP）
+
+- HTTPOnly
 
 
+## JSONP劫持漏洞
 
+SOP，同源策略 (Same Origin Policy)，指不同域的客户端脚本在没有明确授权的情况下，不能读写对方的资源。
+
+JSONP （JSON with padding）：动态创建`<script>`标签，然后利用`<script>`的**src 不受同源策略约束**来跨域获取数据。
+
+## CSRF
+
+[前端安全系列（二）：如何防止CSRF攻击？ - 美团技术团队 (meituan.com)](https://tech.meituan.com/2018/10/11/fe-security-csrf.html)
