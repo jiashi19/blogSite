@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Blog from js19
+title: Blog from jiAshi19
 description: ''
 keywords:
-author: Jiashi
+author: JiAshi
 language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://jiashi19.gitee.io
+url: https://jiashi19.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -100,9 +100,9 @@ theme: fluid
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-- type: git
-  repo: https://gitee.com/jiashi19/jiashi19.git
-  branch: master
+# - type: git
+#   repo: https://gitee.com/jiashi19/jiashi19.git
+#   branch: master
 
 - type: git
   repo: https://github.com/jiashi19/jiashi19.github.io.git
@@ -117,8 +117,8 @@ encrypt:
 
 about:
   avatar: /img/header.png
-  name: "jiashi"
-  intro: "stay hungry, stay foolish"
+  name: "jiAshI"
+  intro: "stay hungry, stay f0olish"
   icons:
     - { class: 'iconfont icon-github-fill', link: 'https://github.com/jiashi19', tip: 'GitHub' }
     - { class: 'iconfont icon-wechat-fill', qrcode: '/img/qrcode.png' }
