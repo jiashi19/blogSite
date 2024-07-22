@@ -1,7 +1,7 @@
 ---
 title: spring知识点
 categories:
-  - java
+  - [java]
   - 秋招
 date: 2024-07-21 20:46:35
 tags:
