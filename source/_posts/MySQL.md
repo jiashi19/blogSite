@@ -104,8 +104,11 @@ B+Tree与其他对比：
 - 防止索引失效； 模糊匹配会导致索引失效
 
 #### 如何知道语句是否走索引查询
-explain查看SQL的执行计划，这样就知道是否命中索引了
+explain查看SQL的执行计划，这样就知道是否命中索引了.
+
 explain select * from xxx;
+查询结果重点关注[type](https://javabetter.cn/interview/mysql-suoyin-15.html#_1-2-1-type), rows(估算需读取的行数)
+
 
 ## 事务篇
 
