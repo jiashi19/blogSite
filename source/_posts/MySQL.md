@@ -173,6 +173,40 @@ MVCC全称是多版本并发控制 (Multi-Version Concurrency Control)，只有�
 
 聚簇索引
 
+## 日志篇
+3个日志：
+undo log（回滚日志）：是 Innodb 存储引擎层生成的日志，实现了事务中的**原子性**，主要用于事务回滚和 MVCC。
+
+redo log（重做日志）：是 Innodb 存储引擎层生成的日志，实现了事务中的**持久性**，主要用于掉电等故障恢复；
+
+binlog （归档日志）：是 Server 层生成的日志，主要用于数据备份和**主从复制**；
+
+### undo log
+#### 1. 原子性
+undo log是一种用于撤销回退的日志。在事务没提交之前，MySQL会先记录更新前的数据到undo log日志文件里面，当事务回滚时，可以利用undo log来进行回滚。
+#### 2. MVCC
+https://xiaolincoding.com/mysql/log/how_update.html#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-undo-log
+
+
+### Buffer Pool 
+Innodb 存储引擎设计了一个缓冲池（Buffer Pool），来提高数据库的读写性能。
+- 当读取数据时，如果数据存在于 Buffer Pool 中，客户端就会直接读取 Buffer Pool 中的数据，否则再去磁盘中读取。
+- 当修改数据时，如果数据存在于 Buffer Pool 中，那直接修改 Buffer Pool 中数据所在的页，然后将其页**设置为脏页**（该页的内存数据和磁盘上的数据已经不一致），为了减少磁盘I/O，不会立即将脏页写入磁盘，后续由后台线程选择一个合适的时机将脏页写入到磁盘。
+
+![](https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png)
+
+
+buffer pool中有undo页，开启事务后，InnoDB 层更新记录前，首先要记录相应的 undo log，如果是更新操作，需要把被更新的列的旧值记下来，也就是要生成一条 undo log，undo log会写入Buffer Pool中的Undo页面。
+### redo log
+当有一条记录需要更新的时候，InnoDB 引擎就会先更新内存(buffer Pool)（同时标记为脏页），然后将本次对这个页的修改以redo log 的形式记录下来，这个时候更新就算完成了。
+后续，InnoDB 引擎会在适当的时候，由后台线程将缓存在 Buffer Pool 的脏页刷新到磁盘里，这就是 WAL（Write-Ahead Logging）技术。
+WAL 技术指的是， MySQL 的写操作并不是立刻写到磁盘上，而是先写日志，然后在合适的时间再写到磁盘上。
+
+**redo log与undo log比较**：
+redo log 记录了此次事务「完成后」的数据状态，记录的是更新之后的值；
+undo log 记录了此次事务「开始前」的数据状态，记录的是更新之前的值；
+![](https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png)
+
 
 
 
