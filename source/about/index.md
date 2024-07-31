@@ -9,7 +9,7 @@ layout: about
 - **📍 所在地：** 四川成都
 
 ### 💬 自我介绍 intro
-在读大学生 🇨🇳 A chinese guy who loves adventure 
+:heart::heart::heart::heart::heart::heart::heart:
 
 - 🖥️ 计算机科学
 - 🤖 机器学习
@@ -33,5 +33,4 @@ layout: about
 - 🌐 **GitHub：** [GitHub链接](https://github.com/jiashi19)
 
 CONTACT ME！
-
 
