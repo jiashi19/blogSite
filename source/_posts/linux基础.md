@@ -2,7 +2,7 @@
 title: linux基础
 categories:
   - others
-date: 2024-07-21 21:24:04
+date: 2024-07-11 21:24:04
 tags:
 ---
 # linux基础知识点

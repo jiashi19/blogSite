@@ -4,12 +4,12 @@ categories:
   - [others]
   - 秋招
 
-date: 2024-07-22 20:56:40
+date: 2024-06-22 20:56:40
 tags:
 password: 12345r
 ---
 
-# Redis 
+# Redis &缓存一致性
 
 [图解Redis介绍 | 小林coding (xiaolincoding.com)](https://xiaolincoding.com/redis/)
 
@@ -100,14 +100,46 @@ redis大量缓存**同时**过期 or redis故障-->大量请求访问sql数据�
 - 限制非法请求（大量非法请求也会导致缓存穿透）
 
 - 缓存空值或者默认值
-- 布隆过滤器
+- 使用布隆过滤器
 
 #### **布隆过滤器**
 
-一个二进制向量加上多个hash函数；有误判；不能删除元素
+- 一个二进制向量加上多个hash函数；
+- 快速，比哈希表更节省空间；
+- 有误判；不能删除元素；
 
-https://github.com/daydreamdev/MeetingFilm/blob/master/note/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F.md
+布隆解决缓存穿透思路：
 
-## Redis未授权访问漏洞
+![img](../img/huancun.png)
 
-[Redis未授权漏洞复现及利用（window,linux）_windows下redis未授权访问漏洞修复-CSDN博客](https://blog.csdn.net/dreamthe/article/details/123427989)
+## 缓存与数据库一致性
+
+**一致性**：
+
+- 强一致性
+- 弱一致性
+- 最终一致性
+
+### **缓存模式**
+
+#### Cache-Aside旁路缓存
+
+读请求:
+
+![Cache-Aside读请求](../img/caside.awebp)
+
+写请求：先写入数据库再清除redis旧缓存；
+
+or：缓存双删。但关键在于：不管是**延时双删**还是**Cache-Aside的先操作数据库再删除缓存**，如果第二步的删除缓存失败，删除失败就会导致**脏数据**——
+
+引入**删除缓存重试机制**：
+
+1. 写请求更新数据库
+2. 缓存因为某些原因，删除失败
+3. 把删除失败的key放到消息队列
+4. 消费消息队列的消息，获取要删除的key
+5. 重试删除缓存操作
+
+## 其他：Redis未授权访问漏洞
+
+[Redis未授权漏洞复现及利用（window,linux）_windows下redis未授权访问漏洞修复](https://blog.csdn.net/dreamthe/article/details/123427989)

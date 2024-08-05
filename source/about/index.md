@@ -9,7 +9,6 @@ layout: about
 - **📍 所在地：** 四川成都
 
 ### 💬 自我介绍 intro
-:heart::heart::heart::heart::heart::heart::heart:
 
 - 🖥️ 计算机科学
 - 🤖 机器学习
