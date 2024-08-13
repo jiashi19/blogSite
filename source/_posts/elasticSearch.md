@@ -1,5 +1,5 @@
 ---
-title: elasticSearch
+title: elasticSearch && improve
 categories:
   - others
 date: 2024-07-15 21:04:48
@@ -96,3 +96,10 @@ DSL是es提供的JSON风格的请求语句，用来操作es，实现CRUD
 
 详细参考链接：https://segmentfault.com/a/1190000042059652
 
+
+
+## ES优化浅析
+
+ES传统分页查询在面临巨大的数据量时效率很低（from+size）.from越大，越慢。且一般有10000的上限.
+
+solve: scroll API. 
