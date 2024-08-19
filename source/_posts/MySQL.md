@@ -203,7 +203,8 @@ Innodb 存储引擎设计了一个缓冲池（Buffer Pool），来提高数据�
 - 当修改数据时，如果数据存在于 Buffer Pool 中，那直接修改 Buffer Pool 中数据所在的页，然后将其页**设置为脏页**（该页的内存数据和磁盘上的数据已经不一致），为了减少磁盘I/O，不会立即将脏页写入磁盘，后续由后台线程选择一个合适的时机将脏页写入到磁盘。
 
 ![](https://cdn.xiaolincoding.com/gh/xiaolincoder/ImageHost4@main/mysql/innodb/%E7%BC%93%E5%86%B2%E6%B1%A0.drawio.png)
-
+如上图，InnoDB会把数据划分为页进行存储，同样，bufferpool也是按页来划分。
+bufferpool除了缓存**数据页**和**索引页**，还有其他页如Undo页，插入缓存，自适应哈希索引，锁信息等。
 
 buffer pool中有undo页，开启事务后，InnoDB 层更新记录前，首先要记录相应的 undo log，如果是更新操作，需要把被更新的列的旧值记下来，也就是要生成一条 undo log，undo log会写入Buffer Pool中的Undo页面。
 ### redo log
@@ -216,7 +217,25 @@ redo log 记录了此次事务「完成后」的数据状态，记录的是更�
 undo log 记录了此次事务「开始前」的数据状态，记录的是更新之前的值；
 ![](https://cdn.xiaolincoding.com/gh/xiaolincoder/mysql/how_update/%E4%BA%8B%E5%8A%A1%E6%81%A2%E5%A4%8D.png)
 
+### binlog
 
+binlog与redo log比较：
+**文件格式**：
+binlog的三种格式类型：
+- STATEMENT：记录sql语句，但会有动态函数问题
+- ROW：可能文件很大
+- MIXED：自动使用以上两种
+而redo log是物理日志，记录某个数据页做了什么修改
+
+
+写入方式：
+binlog：追加写,写满一个接着新建写；
+redo log：循环写，写满就从头开始，保存未被刷入磁盘的脏页日志。
+
+
+**q**:如果不小心整个数据库的数据被删除了，能使用 redo log 文件恢复数据吗？
+只能用binlog。
+redo log只会记录未被刷入磁盘的数据的物理日志。
 
 
 
