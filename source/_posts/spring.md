@@ -192,3 +192,15 @@ spring容器启动后就会将一些配置类，bean对象**自动存入IOC**容
 @SpringBootConfiguration
 @EnableAutoConfiguration
 ```
+
+## springboot设计模式
+### IoC 与 DI
+DI依赖注入是实现IoC的一种设计模式
+### 工厂设计模式
+Spring 使用工厂模式通过 BeanFactory、ApplicationContext 创建 bean 对象
+### 单例设计模式
+spring中的bean的默认就是单例singleton
+
+单bean遇到线程安全问题：在 Bean 中尽量避免定义可变的成员变量。在类中定义一个 ThreadLocal 成员变量，将需要的可变成员变量保存在 ThreadLocal 中（推荐）。
+### 代理设计模式
+AOP
