@@ -67,7 +67,7 @@ docker exec -it xxx /bin/bash # 连接shell
 
 ## docker 数据卷挂载
 
-数据卷 volume, 宿主机和容器之间的中间桥梁.
+数据卷 volume, 宿主机和容器之间的中间桥梁.也可以是docker数据持久化的一种实现。
 
 ```bash
 docker volume create
@@ -148,13 +148,13 @@ docker build -t myjava:1.0 .  # .表示在当前目录下找Dockerfile
 ## docker网络
 
 ```bash
-docker network xxx
+docker network help
 ```
 
 docker的bridge网络模式是Docker的默认网络模式。当Docker进程启动时，它会在主机上创建一个名为**docker0的虚拟网桥**。此主机上启动的Docker容器会连接到这个虚拟网桥上。这个虚拟网桥的工作方式类似于物理交换机，使得主机上的所有容器都通过交换机连接在一个二层网络中。
 容器内部会有一个虚拟网卡，名为eth0，容器之间可以通过这个虚拟网卡和内部的IP地址进行通信。另外，从docker0子网中分配一个IP给容器使用，并设置docker0的IP地址为容器的默认网关。
 
-创建的两个容器如果没有指定相同的网络，会使用默认的bridge 模式的名为bridge的网络，只能通过ip访问，如果指定了自定义的网络（bridge模式），也可以进行dns解析。（q:通过容器名访问是怎么实现的？）
+创建的两个容器如果没有指定相同的网络，会使用默认的bridge 模式的名为bridge的网络，只能通过ip访问，如果指定了自定义的网络（bridge模式），也可以进行dns解析。（q:通过容器名访问是怎么实现的？--通过dns解析）
 
 
 
@@ -189,9 +189,10 @@ docker网络进阶2：[全网最详细的Docker网络教程详解Docker网络详
 通过docker-compose.yml来实现**多个**互相关联的docker容器的快速部署。
 
 ```bash
-docker compose up -d
+#docker compose v2使用中间没有“-” ，很多老教程写的命令都是docker-compose
+docker compose up -d 
 docker compose down
-docker compose ps #查看当前项目下所有容器
+docker compose ps # 查看当前项目下所有容器
 ```
 
 Docker Compose 会检查每个服务的镜像是否已经存在。**如果镜像已经存在，它不会重新构建镜像**，而是直接使用现有的镜像来启动容器。
@@ -204,4 +205,20 @@ docker compose up --build //强制重新构建镜像
 
 
 
-记一句：如果真遇到什么连接不通或者其他疑难杂症，直接**重启**解决80%问题！
+## 容器的CPU和内存的限制
+
+默认情况下，Docker容器是没有资源限制的，它会尽可能地使用宿主机能够分配给它的资源。而对容器内存与CPU使用上限进行一定的限制，可以防止docker负载过大对宿主机造成影响。
+
+```bash
+#查看某container的资源使用情况
+docker container stats containerId
+```
+
+```bash
+#允许该容器最多使用200MB的内存和100MB 的swap。
+docker run -m 200M --memory-swap=300M containerId
+```
+
+## 万能破局方案
+
+如果真遇到什么连接不通或者其他疑难杂症，直接**重启**解决80%问题！
