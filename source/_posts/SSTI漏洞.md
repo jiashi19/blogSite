@@ -1,5 +1,5 @@
 ---
-title: SSTI漏洞
+title: SSTI漏洞浅析
 categories:
   - [ctf-web]
   - 渗透

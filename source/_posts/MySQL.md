@@ -1,5 +1,5 @@
 ---
-title: MySQL
+title: MySQL-八股文知识
 categories:
   - 秋招
 date: 2024-07-21 20:42:54

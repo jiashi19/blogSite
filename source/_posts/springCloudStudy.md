@@ -1,5 +1,5 @@
 ---
-title: 微服务
+title: 微服务Spring cloud框架简单总结
 categories:
   - java
 date: 2024-11-28 21:42:31
@@ -320,3 +320,13 @@ public interface RequestInterceptor {
 通过nacos，我们可以更方便的进行配置管理，可以实现配置的**热更新**而无需重启微服务。
 
 ![image-20241126151915802](../img/image-20241126151915802.png)
+
+配置加载优先级：
+
+bootstrap.properties ->bootstrap.yml -> application.properties -> application.yml.
+
+
+
+
+
+nacos配置中心有一个data ID的概念，其格式为**[服务名]-[spring.active.profile].[后缀名]**。

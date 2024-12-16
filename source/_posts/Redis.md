@@ -1,5 +1,5 @@
 ---
-title: Redis
+title: Redis-八股记录
 categories:
   - [others]
   - 秋招

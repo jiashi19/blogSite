@@ -1,5 +1,5 @@
 ---
-title: SQL-injection
+title: SQL注入
 categories:
   - 渗透
 date: 2023-11-16 09:44:14

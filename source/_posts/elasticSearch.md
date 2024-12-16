@@ -1,5 +1,5 @@
 ---
-title: elasticSearch && improve
+title: elasticSearch学习及滚动查询优化浅析
 categories:
   - others
 date: 2024-07-15 21:04:48
@@ -7,6 +7,7 @@ tags:
 ---
 
 <!-- more -->
+
 # 分布式搜索引擎ES
 参考链接：
 https://www.cnblogs.com/buchizicai/p/17093719.html
@@ -98,8 +99,12 @@ DSL是es提供的JSON风格的请求语句，用来操作es，实现CRUD
 
 
 
-## ES优化浅析
+## ES滚动查询优化浅析
 
+某实际业务问题涉及。目标：导出大量数据至CSV。
 ES传统分页查询在面临巨大的数据量时效率很低（from+size）.from越大，越慢。且一般有10000的上限.
 
-solve: scroll API. 
+solve: scroll API [or search after + pit].
+
+scroll API用于**全量/大量数据导出**比search after更有优势。后者的优势是更新的数据也会实时反映和查询出来，前者在第一次查询时会创建一个上下文（非实时），可能会占据一定堆内存。
+调研看到过说法是用pit+search after的效果也比较不错，但是当时公司所使用的es版本并不支持PIT这个特性，未深入研究.

@@ -1,12 +1,13 @@
 ---
-title: docker
+title: docker学习及vmware中docker网络问题与解决方案
 categories:
   - others
-date: 2024-11-28 21:38:43
+date: 2024-11-28 20:38:43
 tags:
 ---
 
 <!-- more -->
+# docker基础知识及docker网络问题解决
 ## docker命令
 
 基础的命令：
@@ -172,7 +173,7 @@ docker网络进阶2：[全网最详细的Docker网络教程详解Docker网络详
 
 创建新的bridge网络与默认的bridge网络有什么区别：[两个或多个docker容器之间通过名字相互访问 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/258939355)
 
-### docker网络问题解决
+### docker网络问题解决-vm虚拟机中的docker网络
 
 1. docker网络疑难杂症解决：[【docker】重建docker0网桥-阿里云开发者社区 (aliyun.com)](https://developer.aliyun.com/article/1416790)
 
@@ -183,6 +184,19 @@ docker网络进阶2：[全网最详细的Docker网络教程详解Docker网络详
 
 
 总结：如果发现连接不上docker，可以先用`ifconfig -a`检查docker0，发现其down了，可以临时用1方法解决。但每次vmware挂起似乎都会导致docker0网卡down，长久的解决方案参考2方法。
+
+
+
+```bash
+sudo vim /etc/NetworkManager/conf.d/10-unmanage-docker-interfaces.conf
+```
+
+填写内容如下：
+
+```conf
+[keyfile]
+unmanaged-devices=interface-name:docker*;interface-name:veth*;interface-name:br-*;interface-name:vmnet*;interface-name:vboxnet*
+```
 
 ## DockerCompose
 

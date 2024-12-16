@@ -1,5 +1,5 @@
 ---
-title: git
+title: git超简记录
 categories:
   - others
 date: 2024-07-21 21:21:16

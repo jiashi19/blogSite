@@ -1,5 +1,5 @@
 ---
-title: linux基础
+title: linux基础-个人学习总结
 categories:
   - others
 date: 2024-07-11 21:24:04
