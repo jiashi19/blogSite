@@ -41,9 +41,32 @@ docker run -d \
 
 镜像名称结构：Repository:TAG
 
+{
 
+**曾经在run命令中出现的错误操作**：
 
-![image-20241116170056787](../img/image-20241116170056787.png)
+```bash
+docker run --name system123 -d  docker-ruoyi-modules-system --network=docker_rynet --spring.cloud.nacos.discovery.server-addr=192.168.12.128:8848 --spring.cloud.nacos.config.server-addr=192.168.12.128:8848
+```
+
+命令格式问题：在`docker run`命令中，选项和参数的顺序非常重要。所有容器内执行的命令应该放在所有其他选项之后。在上述命令中，`--network=docker_rynet`和Spring Cloud Nacos相关的参数被放在了镜像名称之后，这通常会导致这些参数被视为容器内执行命令的一部分，而不是Docker的选项。
+
+所以该问题导致容器并没有被附加到我想要的docker_rynet网络下，导致微服务启动异常。
+
+利用`docker inspect xxx`排查找到问题。
+
+正确命令：--network放到前面
+
+```bash
+docker run --name system123 --network=docker_rynet -d docker-ruoyi-modules-system \
+  java -jar ruoyi-modules-system.jar \
+  --spring.cloud.nacos.discovery.server-addr=192.168.12.128:8848 \
+  --spring.cloud.nacos.config.server-addr=192.168.12.128:8848
+```
+
+}
+
+![docker生命周期](../img/image-20241116170056787.png)
 
 ```bash
 docker save -o nginx.tar
@@ -126,7 +149,7 @@ docker volume prune
 
 例：构建一个运行springboot的jar项目，Dockerfile内容如下：
 
-```
+```Dockerfile
 # 基础镜像
 FROM openjdk:11.0-jre-buster
 # 设定时区
