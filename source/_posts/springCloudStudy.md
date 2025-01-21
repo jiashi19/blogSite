@@ -292,7 +292,44 @@ public class DefaultFeignConfig {
 
 ## Spring Cloud Gateway
 
-场景：用户信息传递
+### 核心概念
+
+**路由（Route）**：路由是网关最基础的部分，路由信息由 ID、**目标 URI**、一组断言和一组过滤器组成。如果断言 路由为真，则说明请求的 URI 和配置匹配。
+
+ps：URI写成`lb://xxxx`的格式，lb代表负载均衡。
+
+**断言（Predicate）**：Java8 中的断言函数。Spring Cloud Gateway 中的断言函数输入类型是 Spring 5.0 框架中的 **ServerWebExchange**。Spring Cloud Gateway 中的断言函数允许开发者去定义匹配来自于 Http Request 中的任何信息，比如请求头和参数等。
+**过滤器（Filter）**：一个标准的 Spring Web Filter。Gateway 中的 Filter 分为**两种**类型，分别是 Gateway Filter 和 Global Filter。过滤器将会对请求和响应进行处理。
+
+- **GlobalFilters**：全局过滤器，自动应用于所有路由。它们根据`@Order`注解或实现`Ordered`接口来确定执行顺序。
+- **GatewayFilters**：针对特定路由配置的过滤器。它们同样可以根据`@Order`注解或实现`Ordered`接口来指定顺序。如果没有指定顺序，则默认顺序为0。
+
+
+
+config示例：
+
+```yml
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+          enabled: true
+      routes:
+        # 认证中心
+        - id: ruoyi-auth           
+          uri: lb://ruoyi-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            # 验证码处理
+            - CacheRequestFilter
+            - ValidateCodeFilter
+            - StripPrefix=1        #移除匹配路径的第一个前缀（即/auth），使得转发到后端服务的请求路径不包含这个前缀。
+```
+
+**场景应用：用户信息传递**
 
 gateway在拦截校验后可以将用户的token传给某个微服务A（存入Threadlocal），但如果微服务A调用微服务B的服务（利用openFeign调用），如何将token再从A传到B？
 

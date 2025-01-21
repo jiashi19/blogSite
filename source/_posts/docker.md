@@ -247,13 +247,23 @@ docker compose up --build //强制重新构建镜像
 默认情况下，Docker容器是没有资源限制的，它会尽可能地使用宿主机能够分配给它的资源。而对容器内存与CPU使用上限进行一定的限制，可以防止docker负载过大对宿主机造成影响。
 
 ```bash
+#检查当前container设定 比如Memory和MemorySwap值为0时则说明未做限制
+docker inspect containerId
+```
+
+```bash
 #查看某container的资源使用情况
-docker container stats containerId
+docker stats --no-stream containerId
 ```
 
 ```bash
 #允许该容器最多使用200MB的内存和100MB 的swap。
-docker run -m 200M --memory-swap=300M containerId
+docker run -m 200M --memory-swap=300M containerId #memory-swap得设置为200+100
+```
+
+```bash
+#动态更新docker容器的资源限制
+docker update [OPTIONS] containerId
 ```
 
 ## 万能破局方案
