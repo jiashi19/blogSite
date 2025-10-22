@@ -216,6 +216,13 @@ ribbon 负载均衡。在新版本中已经不再使用。被springcloud中的Lo
 
 ![Nacos注册中心](https://foruda.gitee.com/images/1688697862044724829/f19c5fa3_1815095.png)
 
+NacosNamingService，名字服务，可以获取实例信息。
+
+```java
+@NacosInjected
+private NamingService namingService;
+```
+
 ## OpenFeign
 
 本身是对http Restful访问方式的进一步封装。Dubbo还未学习。
@@ -294,12 +301,13 @@ public class DefaultFeignConfig {
 
 ### 核心概念
 
-**路由（Route）**：路由是网关最基础的部分，路由信息由 ID、**目标 URI**、一组断言和一组过滤器组成。如果断言 路由为真，则说明请求的 URI 和配置匹配。
+(1)**路由（Route）**：路由是网关最基础的部分，路由信息由 ID、**目标 URI**、一组断言和一组过滤器组成。如果断言 路由为真，则说明请求的 URI 和配置匹配。
 
 ps：URI写成`lb://xxxx`的格式，lb代表负载均衡。
 
-**断言（Predicate）**：Java8 中的断言函数。Spring Cloud Gateway 中的断言函数输入类型是 Spring 5.0 框架中的 **ServerWebExchange**。Spring Cloud Gateway 中的断言函数允许开发者去定义匹配来自于 Http Request 中的任何信息，比如请求头和参数等。
-**过滤器（Filter）**：一个标准的 Spring Web Filter。Gateway 中的 Filter 分为**两种**类型，分别是 Gateway Filter 和 Global Filter。过滤器将会对请求和响应进行处理。
+(2)**断言（Predicate）**：Java8 中的断言函数。Spring Cloud Gateway 中的断言函数输入类型是 Spring 5.0 框架中的 **ServerWebExchange**。Spring Cloud Gateway 中的断言函数允许开发者去定义匹配来自于 Http Request 中的任何信息，比如请求头和参数等。
+
+(3)**过滤器（Filter）**：一个标准的 Spring Web Filter。Gateway 中的 Filter 分为**两种**类型，分别是 Gateway Filter 和 Global Filter。过滤器将会对请求和响应进行处理。
 
 - **GlobalFilters**：全局过滤器，自动应用于所有路由。它们根据`@Order`注解或实现`Ordered`接口来确定执行顺序。
 - **GatewayFilters**：针对特定路由配置的过滤器。它们同样可以根据`@Order`注解或实现`Ordered`接口来指定顺序。如果没有指定顺序，则默认顺序为0。
@@ -328,6 +336,8 @@ spring:
             - ValidateCodeFilter
             - StripPrefix=1        #移除匹配路径的第一个前缀（即/auth），使得转发到后端服务的请求路径不包含这个前缀。
 ```
+
+
 
 **场景应用：用户信息传递**
 
